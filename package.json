@@ -1,0 +1,36 @@
+{
+  "name": "common_koaservicecli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node App.js",
+    "dist": "babel src -d dist/src && babel App.js -o dist/App.js && node ./build.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cavendichun/common_KoaServiceCli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cavendichun/common_KoaServiceCli/issues"
+  },
+  "homepage": "https://github.com/Cavendichun/common_KoaServiceCli#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-compose": "^4.1.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.1",
+    "koa-timeout-v2": "^1.0.0",
+    "md5": "^2.2.1",
+    "mysql": "^2.16.0"
+  }
+}
