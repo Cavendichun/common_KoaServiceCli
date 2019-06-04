@@ -1,12 +1,13 @@
 {
-  "name": "common_koaservicecli",
-  "version": "1.0.0",
+  "name": "caven-koa-cli",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "babel-node App.js",
     "dist": "babel src -d dist/src && babel App.js -o dist/App.js && node ./build.config.js"
   },
+  "bin": "./createCli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Cavendichun/common_KoaServiceCli.git"
@@ -18,10 +19,14 @@
   },
   "homepage": "https://github.com/Cavendichun/common_KoaServiceCli#readme",
   "devDependencies": {
+    "@legodude/enquirer": "^2.3.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "enquirer": "^2.3.0",
+    "recursive-copy": "^2.0.10",
+    "rollup-plugin-copy": "^2.0.1"
   },
   "dependencies": {
     "koa": "^2.7.0",
