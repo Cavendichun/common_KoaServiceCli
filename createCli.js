@@ -15,31 +15,6 @@ let log = {
 
 let staticFileArr = ['src', '.babelrc', '.gitignore', 'App.js', 'build.config.js', 'config.json', 'package.temp.json', 'readme.md'];
 
-function doPreCopyFile(targetFullPath) {
-    let AppName = 'Koa-Test-Cli';
-    let prompt = new Enquirer.Input({
-        name: 'appname',
-        message: 'Input your app name: (enter to skip)'
-    });
-    prompt.run()
-        .then(
-            answer => {
-                if (answer != undefined && answer.length != 0) { AppName = answer }
-                log.info('AppName: ' + AppName);
-                var packagejson = JSON.parse(fs.readFileSync(path.resolve(__dirname, './package.json')).toString());
-                //只保留必要的字段
-                packagejson.repository = undefined;
-                packagejson.bin = undefined;
-                packagejson.version = '1.0.0';
-                packagejson.bugs = undefined;
-                packagejson.name = AppName;
-                fs.writeFileSync(path.resolve(__dirname, './package.temp.json'), new Buffer.from(JSON.stringify(packagejson, null, 4)));
-                doCopyFile(targetFullPath);
-            }
-        )
-        .catch(console.error);
-}
-
 function doCopyFile(targetFullPath, AppName) {
     log.info('开始生成');
     //检查路径是否存在
@@ -74,18 +49,39 @@ function doCopyFile(targetFullPath, AppName) {
         log.error('异常终止');
         return false;
     } else {
-        staticFileArr.map(i => {
-            let _i = i;
-            console.log(targetFullPath + '/' + _i);
-            copy(__dirname + '/' + _i, targetFullPath + '/' + (_i == 'package.temp.json' ? 'package.json' : _i), (error, results) => {
-                if (error) {
-                    console.error('Copy failed: ' + error);
-                } else {
-                    // console.info('Copied ' + results.length + ' files');
+        let AppName = 'Koa-Test-Cli';
+        let prompt = new Enquirer.Input({
+            name: 'appname',
+            message: 'Input your app name: (enter to skip)'
+        });
+        prompt.run()
+            .then(
+                answer => {
+                    if (answer != undefined && answer.length != 0) { AppName = answer }
+                    log.info('AppName: ' + AppName);
+                    var packagejson = JSON.parse(fs.readFileSync(path.resolve(__dirname, './package.json')).toString());
+                    //只保留必要的字段
+                    packagejson.repository = undefined;
+                    packagejson.bin = undefined;
+                    packagejson.version = '1.0.0';
+                    packagejson.bugs = undefined;
+                    packagejson.name = AppName;
+                    fs.writeFileSync(path.resolve(__dirname, './package.temp.json'), new Buffer.from(JSON.stringify(packagejson, null, 4)));
+                    doCopyFile(targetFullPath);
+                    staticFileArr.map(i => {
+                        let _i = i;
+                        console.log(targetFullPath + '/' + _i);
+                        copy(__dirname + '/' + _i, targetFullPath + '/' + (_i == 'package.temp.json' ? 'package.json' : _i), (error, results) => {
+                            if (error) {
+                                console.error('Copy failed: ' + error);
+                            } else {
+                                // console.info('Copied ' + results.length + ' files');
+                            }
+                        })
+                    })
+                    log.info('生成完成, 请到相应目录下执行npm install');
                 }
-            })
-        })
-        log.info('生成完成, 请到相应目录下执行npm install');
+            )
     }
 }
 
@@ -106,14 +102,14 @@ if (wishCreatePath == undefined) {
     return false;
 } else if (wishCreatePath == '.') {
     let targetFullPath = currentExecutionPath;
-    doPreCopyFile(targetFullPath);
+    doCopyFile(targetFullPath);
 } else if (typeof wishCreatePath == 'string') {
     let targetFullPath = path.resolve(currentExecutionPath, wishCreatePath);
     if (isFilePathReg.test(targetFullPath) == false) {
         log.error('路径名不合法');
         return false;
     } else {
-        doPreCopyFile(targetFullPath);
+        doCopyFile(targetFullPath);
     }
 } else {
     log.error('执行caven-koa-cli指令必须附加路径参数，如；caven-koa-cli test 或 caven-koa-cli test/a 或 caven-koa-cli .');
