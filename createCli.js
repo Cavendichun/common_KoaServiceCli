@@ -13,7 +13,7 @@ let log = {
     }
 }
 
-let staticFileArr = ['src', '.babelrc', '.gitignore', 'App.js', 'build.config.js', 'config.json', 'package.temp.json', 'readme.md'];
+let staticFileArr = ['src', '.babelrc', 'App.js', 'build.config.js', 'config.json', 'package.temp.json', 'readme.md'];
 
 function doCopyFile(targetFullPath, AppName) {
     log.info('开始生成');
@@ -67,6 +67,7 @@ function doCopyFile(targetFullPath, AppName) {
                     packagejson.bugs = undefined;
                     packagejson.name = AppName;
                     fs.writeFileSync(path.resolve(__dirname, './package.temp.json'), new Buffer.from(JSON.stringify(packagejson, null, 4)));
+                    fs.writeFileSync(targetFullPath + '/' + '.gitignore', new Buffer.from('/node_modules/\n/dist/\n/logs/\n/package-lock.json'));
                     staticFileArr.map(i => {
                         let _i = i;
                         console.log(targetFullPath + '/' + _i);
