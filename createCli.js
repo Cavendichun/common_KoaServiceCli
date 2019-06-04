@@ -10,6 +10,9 @@ let log = {
     },
     info: (str) => {
         console.log('\033[36m' + str + '\033[0m');
+    },
+    warn: (str) => {
+        console.log('\033[34m' + str + '\033[0m');
     }
 }
 
@@ -79,7 +82,7 @@ function doCopyFile(targetFullPath, AppName) {
                             }
                         })
                     })
-                    log.info('生成完成, 请到相应目录下执行npm install');
+                    log.warn('生成完成, 请到相应目录下执行npm install, 并修改config.json相关配置以保证正常运行');
                 }
             )
     }
