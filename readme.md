@@ -2,6 +2,7 @@
 
 ------
 ##一.安装与运行
+> * caven-koa-cli . 或 caven-koa-cli test
 > * npm install
 > * npm start
 
