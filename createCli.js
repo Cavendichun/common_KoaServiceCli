@@ -67,7 +67,6 @@ function doCopyFile(targetFullPath, AppName) {
                     packagejson.bugs = undefined;
                     packagejson.name = AppName;
                     fs.writeFileSync(path.resolve(__dirname, './package.temp.json'), new Buffer.from(JSON.stringify(packagejson, null, 4)));
-                    doCopyFile(targetFullPath);
                     staticFileArr.map(i => {
                         let _i = i;
                         console.log(targetFullPath + '/' + _i);
