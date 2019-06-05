@@ -82,7 +82,7 @@ function doCopyFile(targetFullPath, AppName) {
                             }
                         })
                     })
-                    log.warn('生成完成, 请到相应目录下执行npm install, 并修改config.json相关配置以保证正常运行');
+                    log.info('生成完成, 请到相应目录下执行npm install, 并修改config.json相关配置以保证正常运行');
                 }
             )
     }
